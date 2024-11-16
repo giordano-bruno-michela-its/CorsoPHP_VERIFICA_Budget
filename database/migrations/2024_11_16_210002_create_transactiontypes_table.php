@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactiontypes', function (Blueprint $table) {
+        Schema::create('transaction_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description')->nullable()->default("No description");

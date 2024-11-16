@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('account_id')->constrained()->restrictOnDelete();
-            $table->foreignId('transactiontype_id')->constrained()->restrictOnDelete();
+            $table->foreignId('transaction_type_id')->constrained()->restrictOnDelete();
             $table->text('description')->nullable()->default("No description");
             $table->decimal('amount', 15, 2);
             

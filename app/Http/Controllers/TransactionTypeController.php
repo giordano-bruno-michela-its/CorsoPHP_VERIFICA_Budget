@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TransactionType;
 use Illuminate\Http\Request;
 
 class TransactionTypeController extends Controller
@@ -19,7 +20,7 @@ class TransactionTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('transaction-types.create');
     }
 
     /**
@@ -27,7 +28,15 @@ class TransactionTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'type' => 'required|in:income,expense,transfer',
+        ]);
+
+        TransactionType::create($request->all());
+
+        return redirect()->route('dashboard')->with('success', 'Transaction type created successfully.');
     }
 
     /**

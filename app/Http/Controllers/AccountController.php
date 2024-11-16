@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -19,7 +21,7 @@ class AccountController extends Controller
      */
     public function create()
     {
-        //
+        return view('accounts.create');
     }
 
     /**
@@ -27,7 +29,16 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+    
+        $account = new Account($request->all());
+        $account->user_id = Auth::user()->id; // Set the user_id to the currently authenticated user
+        $account->save();
+    
+        return redirect()->route('dashboard')->with('success', 'Account created successfully.');
     }
 
     /**

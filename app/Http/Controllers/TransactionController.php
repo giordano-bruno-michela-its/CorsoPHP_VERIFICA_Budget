@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Account;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\TransactionType;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -11,7 +16,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transactions = Transaction::with(['user', 'account', 'transactionType'])->get();
+        return view('dashboard', compact('transactions'));
     }
 
     /**
@@ -19,7 +25,10 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::all();
+        $accounts = Account::all();
+        $transactionTypes = TransactionType::all();
+        return view('transactions.create', compact('users', 'accounts', 'transactionTypes'));
     }
 
     /**
@@ -27,7 +36,23 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'account_id' => 'required|exists:accounts,id',
+            'transaction_type_id' => 'required|exists:transaction_types,id',
+            'description' => 'nullable|string',
+            'amount' => 'required|numeric',
+        ]);
+
+        // Create the transaction with the authenticated user's ID
+        Transaction::create([
+            'user_id' => Auth::user()->id,
+            'account_id' => $request->account_id,
+            'transaction_type_id' => $request->transaction_type_id,
+            'description' => $request->description,
+            'amount' => $request->amount,
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'Transaction created successfully.');
     }
 
     /**
