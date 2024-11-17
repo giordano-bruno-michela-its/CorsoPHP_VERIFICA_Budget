@@ -88,4 +88,16 @@ class TransactionController extends Controller
     {
         //
     }
+
+    public function sort(Request $request)
+    {
+        $column = $request->get('column', 'id');
+        $direction = $request->get('direction', 'asc');
+
+        $transactions = Transaction::with(['account', 'transactionType'])
+            ->orderBy($column, $direction)
+            ->get();
+
+        return view('partials.transactions-table', compact('transactions'))->render();
+    }
 }
