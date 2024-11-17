@@ -27,7 +27,10 @@
                                 <option value="transfer">Transfer</option>
                             </select>
                         </div>
-                        <div class="flex items-center justify-end mt-4">
+                        <div class="flex items-center justify-center mt-4">
+                            <x-secondary-button onclick="window.history.back();">
+                                {{ __('Cancel') }}
+                            </x-secondary-button>
                             <x-primary-button class="ml-4">
                                 {{ __('Add Transaction Type') }}
                             </x-primary-button>

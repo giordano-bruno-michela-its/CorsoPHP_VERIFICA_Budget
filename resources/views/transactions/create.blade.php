@@ -35,7 +35,10 @@
                             <x-input-label for="amount" :value="__('Amount')" />
                             <x-text-input id="amount" class="block mt-1 w-full" type="number" step="0.01" name="amount" />
                         </div>
-                        <div class="flex items-center justify-end mt-4">
+                        <div class="flex items-center justify-center mt-4">
+                            <x-secondary-button onclick="window.history.back();">
+                                {{ __('Cancel') }}
+                            </x-secondary-button>
                             <x-primary-button class="ml-4">
                                 {{ __('Add Transaction') }}
                             </x-primary-button>
