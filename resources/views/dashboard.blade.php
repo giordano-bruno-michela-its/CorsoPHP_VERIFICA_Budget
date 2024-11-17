@@ -96,16 +96,16 @@
                     <table class="min-w-full divide-y divide-gray-200 w-full" data-sort-dir="asc">
                         <thead>
                             <tr>
-                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable('created_at', toggleSortDirection('created_at'))">
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700" onclick="sortTable('created_at', toggleSortDirection('created_at'))">
                                     Date <span id="created_at_arrow" class="sort-arrow">&#9650;</span>
                                 </th>
-                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Account</th>
-                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Type</th>
-                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Description</th>
-                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable('amount', toggleSortDirection('amount'))">
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700">Account</th>
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700">Type</th>
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700">Description</th>
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700" onclick="sortTable('amount', toggleSortDirection('amount'))">
                                     Amount <span id="amount_arrow" class="sort-arrow">&#9650;</span>
                                 </th>
-                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Actions</th>
+                                <th class="cursor-pointer px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700 w-16">Mod</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" id="transactionsTable">
@@ -116,7 +116,7 @@
                                 <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->transactionType->name }}</td>
                                 <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->description }}</td>
                                 <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->amount }}</td>
-                                <td class="px-6 py-1 whitespace-nowrap border border-gray-200">
+                                <td class="px-1 py-1 whitespace-nowrap border border-gray-200 w-16">
                                     <a href="{{ route('transactions.edit', $transaction->id) }}" class="text-blue-500 hover:text-blue-700">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                             <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828zM4 12v4h4v-1H5v-3H4z" />
