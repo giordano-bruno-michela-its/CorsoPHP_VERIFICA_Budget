@@ -25,8 +25,8 @@
                             <table class="min-w-full divide-y divide-gray-200 w-full">
                                 <thead>
                                     <tr>
-                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Account</th>
-                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Balance</th>
+                                        <th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Account</th>
+                                        <th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Balance</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -55,7 +55,7 @@
             <a href="{{ route('transaction-types.create') }}" class="bg-purple-500 text-white px-4 py-2 rounded">Add Transaction Type</a>
 
             <div x-data="{ open: false }" class="relative">
-                <button @click="open = !open" class="bg-gray-500 text-white px-4 py-2 rounded">Manage Transaction Types</button>
+                <button @click="open = !open" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">Manage Transaction Types</button>
                 <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg">
                     <ul>
                         @foreach ($transactionTypes as $type)
@@ -75,12 +75,12 @@
                     <table class="min-w-full divide-y divide-gray-200 w-full">
                         <thead>
                             <tr>
-                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(0)">ID</th>
-                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(2)">Account</th>
-                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(3)">Type</th>
-                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(4)">Description</th>
-                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(5)">Amount</th>
-                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(6)">Actions</th>
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(0)">ID</th>
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(2)">Account</th>
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(3)">Type</th>
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(4)">Description</th>
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(5)">Amount</th>
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(6)">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">

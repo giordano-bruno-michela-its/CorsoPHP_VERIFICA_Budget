@@ -24,12 +24,12 @@
                         </div>
 
                         <div class="flex items-center justify-center mt-4">
-                            <button class="bg-gray-700 text-white py-2 px-4 rounded" onclick="window.history.back();">
+                            <x-secondary-button onclick="window.history.back();">
                                 {{ __('Cancel') }}
-                            </button>
-                            <button class="bg-gray-700 text-white py-2 px-4 rounded ml-4">
+                            </x-secondary-button>
+                            <x-primary-button class="ml-4">
                                 {{ __('Update Transaction Type') }}
-                            </button>
+                            </x-primary-button>
                         </div>
                     </form>
                 </div>
