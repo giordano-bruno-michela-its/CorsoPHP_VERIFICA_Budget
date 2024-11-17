@@ -20,7 +20,7 @@
             <div class="w-1/4">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Account Balances</h3>
+                        <h3 class="pb-4 text-lg font-medium text-gray-900 dark:text-gray-100">Account Balances</h3>
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200 w-full">
                                 <thead>
@@ -38,6 +38,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100">Total Balance: {{ number_format($totalBalance, 2) }}</h4>
                         </div>
                     </div>
                 </div>
@@ -111,7 +114,7 @@
                         <tbody class="bg-white divide-y divide-gray-200" id="transactionsTable">
                             @foreach ($transactions as $transaction)
                             <tr class="border border-gray-700">
-<!--                                 <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $transaction->created_at->format('Y-m-d H:i') }}</td>
+                                <!--                                 <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $transaction->created_at->format('Y-m-d H:i') }}</td>
                                 <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $transaction->account->name }}</td>
                                 <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $transaction->transactionType->name }}</td>
                                 <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $transaction->description }}</td>

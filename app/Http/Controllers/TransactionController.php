@@ -19,7 +19,8 @@ class TransactionController extends Controller
         $accounts = Account::where('user_id', Auth::id())->get();
         $transactions = Transaction::with(['user', 'account', 'transactionType'])->get();
         $transactionTypes = TransactionType::all();
-        return view('dashboard', compact('accounts', 'transactions', 'transactionTypes'));
+        $totalBalance = $accounts->sum('balance');
+        return view('dashboard', compact('accounts', 'transactions', 'transactionTypes', 'totalBalance'));
     }
 
     /**
