@@ -96,7 +96,6 @@
                     <table class="min-w-full divide-y divide-gray-200 w-full" data-sort-dir="asc">
                         <thead>
                             <tr>
-                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable('id')">ID</th>
                                 <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable('created_at', toggleSortDirection('created_at'))">
                                     Date <span id="created_at_arrow" class="sort-arrow">&#9650;</span>
                                 </th>
@@ -112,8 +111,7 @@
                         <tbody class="bg-white divide-y divide-gray-200" id="transactionsTable">
                             @foreach ($transactions as $transaction)
                             <tr>
-                                <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->id }}</td>
-                                <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->created_at->format('Y-m-d H:i:s') }}</td>
+                                <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->created_at->format('Y-m-d H:i') }}</td>
                                 <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->account->name }}</td>
                                 <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->transactionType->name }}</td>
                                 <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->description }}</td>
