@@ -4,7 +4,7 @@
     <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $transaction->account->name }}</td>
     <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $transaction->transactionType->name }}</td>
     <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $transaction->description }}</td>
-    <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $transaction->transactionType->type === 'expense' ? '-' : '' }}{{ number_format($transaction->amount, 2) }} &euro;</td>
+    <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ number_format($transaction->amount, 2) }} &euro;</td>
     <td class="px-5 py-1 whitespace-nowrap border border-gray-700">
         <a href="{{ route('transactions.edit', $transaction->id) }}" class="text-blue-500 hover:text-blue-700">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
