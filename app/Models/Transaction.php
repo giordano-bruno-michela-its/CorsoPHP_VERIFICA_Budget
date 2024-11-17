@@ -28,4 +28,13 @@ class Transaction extends Model
     {
         return $this->belongsTo(TransactionType::class);
     }
+
+    public function setAmountAttribute($value)
+    {
+        if ($this->transactionType->type === 'expense' && $value > 0) {
+            $this->attributes['amount'] = -$value;
+        } else {
+            $this->attributes['amount'] = $value;
+        }
+    }
 }

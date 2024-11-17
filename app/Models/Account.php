@@ -18,6 +18,8 @@ class Account extends Model
 
     public function getBalanceAttribute()
     {
-        return $this->transactions()->sum('amount');
+        return $this->transactions->sum(function ($transaction) {
+            return $transaction->transactionType->type === 'expense' ? -abs($transaction->amount) : $transaction->amount;
+        });
     }
 }
