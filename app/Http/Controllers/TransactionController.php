@@ -14,7 +14,7 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $userId = Auth::id();
         $accounts = Account::where('user_id', $userId)->get();
@@ -23,7 +23,15 @@ class TransactionController extends Controller
             ->get();
         $transactionTypes = TransactionType::all();
         $totalBalance = $accounts->sum('balance');
-        return view('dashboard', compact('accounts', 'transactions', 'transactionTypes', 'totalBalance'));
+    
+        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
+        $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
+    
+        $periodBalance = Transaction::where('user_id', $userId)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->sum('amount');
+    
+        return view('dashboard', compact('accounts', 'transactions', 'transactionTypes', 'totalBalance', 'periodBalance'));
     }
 
     /**
