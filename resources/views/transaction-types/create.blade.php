@@ -21,7 +21,7 @@
                         </div>
                         <div class="mt-4">
                             <x-input-label for="type" :value="__('Type')" />
-                            <select id="type" name="type" class="block mt-1 w-full">
+                            <select id="type" name="type" class="block mt-1 w-full dark:bg-gray-900 dark:text-gray-300">
                                 <option value="income">Income</option>
                                 <option value="expense">Expense</option>
                                 <option value="transfer">Transfer</option>

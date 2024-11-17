@@ -13,7 +13,7 @@
                         @csrf
                         <div class="mt-4">
                             <x-input-label for="account_id" :value="__('Account')" />
-                            <select id="account_id" name="account_id" class="block mt-1 w-full">
+                            <select id="account_id" name="account_id" class="block mt-1 w-full dark:bg-gray-900 dark:text-gray-300">
                                 @foreach ($accounts as $account)
                                 <option value="{{ $account->id }}">{{ $account->name }}</option>
                                 @endforeach
@@ -21,7 +21,7 @@
                         </div>
                         <div class="mt-4">
                             <x-input-label for="transaction_type_id" :value="__('Transaction Type')" />
-                            <select id="transaction_type_id" name="transaction_type_id" class="block mt-1 w-full">
+                            <select id="transaction_type_id" name="transaction_type_id" class="block mt-1 w-full dark:bg-gray-900 dark:text-gray-300">
                                 @foreach ($transactionTypes as $transactionType)
                                 <option value="{{ $transactionType->id }}">{{ $transactionType->name }}</option>
                                 @endforeach
