@@ -16,7 +16,10 @@ Route::get('/dashboard', [TransactionController::class, 'index'])
 
 Route::middleware('auth')->group(function () {
     Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
+    Route::get('/transactions/{id}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
+    Route::patch('/transactions/{id}', [TransactionController::class, 'update'])->name('transactions.update');
     Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+    Route::get('/transactions/sort', [TransactionController::class, 'sort'])->name('transactions.sort');
 
     Route::get('/accounts/create', [AccountController::class, 'create'])->name('accounts.create');
     Route::post('/accounts', [AccountController::class, 'store'])->name('accounts.store');
@@ -25,7 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/transaction-types', [TransactionTypeController::class, 'store'])->name('transaction-types.store');
     Route::get('/transaction-types/{id}/edit', [TransactionTypeController::class, 'edit'])->name('transaction-types.edit');
     Route::patch('/transaction-types/{id}', [TransactionTypeController::class, 'update'])->name('transaction-types.update');
-    Route::get('/transactions/sort', [TransactionController::class, 'sort'])->name('transactions.sort');
 });
 
 Route::middleware('auth')->group(function () {

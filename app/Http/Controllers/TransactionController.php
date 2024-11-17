@@ -70,7 +70,10 @@ class TransactionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $transaction = Transaction::findOrFail($id);
+        $accounts = Account::all();
+        $transactionTypes = TransactionType::all();
+        return view('transactions.edit', compact('transaction', 'accounts', 'transactionTypes'));
     }
 
     /**
@@ -78,7 +81,23 @@ class TransactionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'account_id' => 'required|exists:accounts,id',
+            'transaction_type_id' => 'required|exists:transaction_types,id',
+            'description' => 'nullable|string',
+            'amount' => 'required|numeric',
+            'created_at' => 'required|date_format:Y-m-d\TH:i',
+        ]);
+    
+        $transaction = Transaction::findOrFail($id);
+        $transaction->account_id = $request->account_id;
+        $transaction->transaction_type_id = $request->transaction_type_id;
+        $transaction->description = $request->description;
+        $transaction->amount = $request->amount;
+        $transaction->created_at = $request->created_at;
+        $transaction->save();
+    
+        return redirect()->route('dashboard')->with('success', 'Transaction updated successfully.');
     }
 
     /**
