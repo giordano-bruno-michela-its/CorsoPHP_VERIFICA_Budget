@@ -70,7 +70,8 @@ class TransactionController extends Controller
     public function edit(string $id)
     {
         $transaction = Transaction::findOrFail($id);
-        $accounts = Account::all();
+        $userId = Auth::id();
+        $accounts = Account::where('user_id', $userId)->get();
         $transactionTypes = TransactionType::all();
         return view('transactions.edit', compact('transaction', 'accounts', 'transactionTypes'));
     }
