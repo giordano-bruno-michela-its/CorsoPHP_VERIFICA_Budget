@@ -25,15 +25,15 @@
                             <table class="min-w-full divide-y divide-gray-200 w-full">
                                 <thead>
                                     <tr>
-                                        <th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Account</th>
-                                        <th class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Balance</th>
+                                        <th class="px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700 text-gray-300">Account</th>
+                                        <th class="px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700 text-gray-300">Balance</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach ($accounts as $account)
-                                    <tr>
-                                        <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $account->name }}</td>
-                                        <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $account->balance }}</td>
+                                    <tr class="bg-white dark:bg-gray-900">
+                                        <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $account->name }}</td>
+                                        <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $account->balance }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
