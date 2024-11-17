@@ -97,11 +97,15 @@
                         <thead>
                             <tr>
                                 <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable('id')">ID</th>
-                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable('created_at')">Date</th>
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable('created_at', toggleSortDirection('created_at'))">
+                                    Date <span id="created_at_arrow" class="sort-arrow">&#9650;</span>
+                                </th>
                                 <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Account</th>
                                 <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Type</th>
                                 <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Description</th>
-                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable('amount')">Amount</th>
+                                <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable('amount', toggleSortDirection('amount'))">
+                                    Amount <span id="amount_arrow" class="sort-arrow">&#9650;</span>
+                                </th>
                                 <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">Actions</th>
                             </tr>
                         </thead>
@@ -138,8 +142,26 @@
                     success: function(data) {
                         $('#transactionsTable').html(data);
                         document.getElementById("transactionsTable").setAttribute("data-sort-dir", direction);
+                        updateSortArrows(column, direction);
                     }
                 });
+            }
+
+            function toggleSortDirection(column) {
+                const currentDirection = document.getElementById("transactionsTable").getAttribute("data-sort-dir");
+                return currentDirection === 'asc' ? 'desc' : 'asc';
+            }
+
+            function updateSortArrows(column, direction) {
+                const arrows = document.querySelectorAll('.sort-arrow');
+                arrows.forEach(arrow => arrow.innerHTML = '&#9650;&#9660;'); // Reset all arrows to up and down
+
+                const arrow = document.getElementById(column + '_arrow');
+                if (direction === 'asc') {
+                    arrow.innerHTML = '&#9650;'; // Up arrow
+                } else {
+                    arrow.innerHTML = '&#9660;'; // Down arrow
+                }
             }
 
             document.addEventListener('DOMContentLoaded', function() {
