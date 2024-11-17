@@ -8,7 +8,7 @@ use App\Http\Controllers\TransactionTypeController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/dashboard', [TransactionController::class, 'index'])
     ->middleware(['auth', 'verified'])
