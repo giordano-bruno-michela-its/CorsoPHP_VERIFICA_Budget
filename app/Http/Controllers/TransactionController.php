@@ -16,8 +16,11 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $accounts = Account::where('user_id', Auth::id())->get();
-        $transactions = Transaction::with(['user', 'account', 'transactionType'])->get();
+        $userId = Auth::id();
+        $accounts = Account::where('user_id', $userId)->get();
+        $transactions = Transaction::with(['account', 'transactionType'])
+            ->where('user_id', $userId)
+            ->get();
         $transactionTypes = TransactionType::all();
         $totalBalance = $accounts->sum('balance');
         return view('dashboard', compact('accounts', 'transactions', 'transactionTypes', 'totalBalance'));
@@ -28,10 +31,10 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        $accounts = Account::all();
+        $userId = Auth::id();
+        $accounts = Account::where('user_id', $userId)->get();
         $transactionTypes = TransactionType::all();
-        return view('transactions.create', compact('users', 'accounts', 'transactionTypes'));
+        return view('transactions.create', compact('accounts', 'transactionTypes'));
     }
 
     /**
@@ -45,16 +48,11 @@ class TransactionController extends Controller
             'description' => 'nullable|string',
             'amount' => 'required|numeric',
         ]);
-
-        // Create the transaction with the authenticated user's ID
-        Transaction::create([
-            'user_id' => Auth::user()->id,
-            'account_id' => $request->account_id,
-            'transaction_type_id' => $request->transaction_type_id,
-            'description' => $request->description,
-            'amount' => $request->amount,
-        ]);
-
+    
+        $transaction = new Transaction($request->all());
+        $transaction->user_id = Auth::id();
+        $transaction->save();
+    
         return redirect()->route('dashboard')->with('success', 'Transaction created successfully.');
     }
 
@@ -111,13 +109,15 @@ class TransactionController extends Controller
 
     public function sort(Request $request)
     {
+        $userId = Auth::id();
         $column = $request->get('column', 'id');
         $direction = $request->get('direction', 'asc');
-
+    
         $transactions = Transaction::with(['account', 'transactionType'])
+            ->where('user_id', $userId) // Ensure transactions are filtered by user_id
             ->orderBy($column, $direction)
             ->get();
-
+    
         return view('partials.transactions-table', compact('transactions'))->render();
     }
 }
