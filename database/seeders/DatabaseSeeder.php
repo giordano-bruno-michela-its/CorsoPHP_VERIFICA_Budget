@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Account;
+use App\Models\TransactionType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +20,23 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+        ]);
+
+        // Transaction types
+
+        TransactionType::create([
+            'name' => 'Accredito',
+            'type' => 'income',
+        ]);
+
+        TransactionType::create([
+            'name' => 'Addebito',
+            'type' => 'expense',
+        ]);
+
+        TransactionType::create([
+            'name' => 'Trasferimento',
+            'type' => 'transfer',
         ]);
     }
 }

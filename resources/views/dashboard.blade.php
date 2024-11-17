@@ -27,27 +27,26 @@
                     <table class="min-w-full divide-y divide-gray-200 w-full">
                         <thead>
                             <tr>
-                                <th class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(0)">ID</th>
-                                <th class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(1)">User</th>
-                                <th class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(2)">Account</th>
-                                <th class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(3)">Type</th>
-                                <th class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(4)">Description</th>
-                                <th class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(5)">Amount</th>
-                                <th class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onclick="sortTable(6)">Actions</th>
+                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(0)">ID</th>
+                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(1)">User</th>
+                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(2)">Account</th>
+                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(3)">Type</th>
+                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(4)">Description</th>
+                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(5)">Amount</th>
+                                <th class="cursor-pointer px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200" onclick="sortTable(6)">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($transactions as $transaction)
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $transaction->id }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $transaction->user->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $transaction->account->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $transaction->transactionType->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $transaction->description }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $transaction->amount }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <button class="text-blue-600 hover:text-blue-900 mr-2"><i class="fas fa-edit"></i></button>
-                                    <button class="text-red-600 hover:text-red-900" onclick="confirmDelete()"><i class="fas fa-trash"></i></button>
+                                <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->id }}</td>
+                                <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->user->name }}</td>
+                                <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->account->name }}</td>
+                                <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->transactionType->name }}</td>
+                                <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->description }}</td>
+                                <td class="px-6 py-1 whitespace-nowrap border border-gray-200">{{ $transaction->amount }}</td>
+                                <td class="px-6 py-1 whitespace-nowrap border border-gray-200">
+                                    <!-- Actions buttons here -->
                                 </td>
                             </tr>
                             @endforeach
