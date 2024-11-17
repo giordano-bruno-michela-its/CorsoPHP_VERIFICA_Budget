@@ -53,13 +53,13 @@
                             <div class="flex flex-col space-y-4">
                                 <div class="flex items-center">
                                     <label for="start_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</label>
-                                    <input type="date" id="start_date" name="start_date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ request('start_date', now()->startOfMonth()->toDateString()) }}">
+                                    <input type="date" id="start_date" name="start_date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ request('start_date', now()->startOfMonth()->toDateString()) }}" max="{{ now()->toDateString() }}" onchange="validateDates()">
                                     <button type="button" onclick="adjustDate('start_date', -1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M-</button>
                                     <button type="button" onclick="adjustDate('start_date', 1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M+</button>
                                 </div>
                                 <div class="flex items-center">
                                     <label for="end_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">End Date</label>
-                                    <input type="date" id="end_date" name="end_date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ request('end_date', now()->endOfMonth()->toDateString()) }}">
+                                    <input type="date" id="end_date" name="end_date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ request('end_date', now()->toDateString()) }}" max="{{ now()->toDateString() }}" onchange="validateDates()">
                                     <button type="button" onclick="adjustDate('end_date', -1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M-</button>
                                     <button type="button" onclick="adjustDate('end_date', 1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M+</button>
                                 </div>
@@ -200,11 +200,30 @@
                 sortTable('created_at', 'desc');
             });
 
-            function adjustDate(inputId, monthChange) {
-                const input = document.getElementById(inputId);
-                const date = new Date(input.value);
-                date.setMonth(date.getMonth() + monthChange);
+            function adjustDate(id, months) {
+                const input = document.getElementById(id);
+                let date = new Date(input.value);
+                date.setMonth(date.getMonth() + months);
+
+                const today = new Date();
+                if (date > today) {
+                    date = today;
+                }
+
                 input.value = date.toISOString().split('T')[0];
+                validateDates();
+            }
+
+            function validateDates() {
+                const startDateInput = document.getElementById('start_date');
+                const endDateInput = document.getElementById('end_date');
+
+                const startDate = new Date(startDateInput.value);
+                const endDate = new Date(endDateInput.value);
+
+                if (endDate < startDate) {
+                    endDateInput.value = startDateInput.value;
+                }
             }
         </script>
 
