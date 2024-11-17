@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Account;
+use App\Models\Transfer;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\TransactionType;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
@@ -23,14 +25,17 @@ class TransactionController extends Controller
             ->get();
         $transactionTypes = TransactionType::all();
         $totalBalance = $accounts->sum('balance');
-    
+
         $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
         $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
-    
+
         $periodBalance = Transaction::where('user_id', $userId)
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->sum('amount');
-    
+            ->get()
+            ->sum(function ($transaction) {
+                return $transaction->transactionType->type === 'expense' ? -$transaction->amount : $transaction->amount;
+            });
+
         return view('dashboard', compact('accounts', 'transactions', 'transactionTypes', 'totalBalance', 'periodBalance'));
     }
 
@@ -57,11 +62,48 @@ class TransactionController extends Controller
             'amount' => 'required|numeric',
             'to_account_id' => 'required_if:transaction_type_id,3|exists:accounts,id'
         ]);
-    
-        $transaction = new Transaction($request->all());
-        $transaction->user_id = Auth::id();
-        $transaction->save();
-    
+
+        if ($request->transaction_type_id == 3) {
+            // Handle transfer
+            DB::transaction(function () use ($request) {
+                $transfer = Transfer::create([
+                    'user_id' => Auth::id(),
+                    'from_account_id' => $request->account_id,
+                    'to_account_id' => $request->to_account_id,
+                    'amount' => $request->amount,
+                    'description' => $request->description,
+                ]);
+
+                // Create a single transaction record for the transfer
+                Transaction::create([
+                    'user_id' => Auth::id(),
+                    'account_id' => $request->account_id,
+                    'transaction_type_id' => $request->transaction_type_id,
+                    'description' => $request->description,
+                    'amount' => -$request->amount, // Negative amount for debit
+                    'to_account_id' => $request->to_account_id, // Store the destination account ID
+                ]);
+
+                // Create a corresponding transaction for the destination account (credit)
+                Transaction::create([
+                    'user_id' => Auth::id(),
+                    'account_id' => $request->to_account_id,
+                    'transaction_type_id' => $request->transaction_type_id,
+                    'description' => $request->description,
+                    'amount' => $request->amount, // Positive amount for credit
+                ]);
+            });
+        } else {
+            // Handle regular transaction
+            Transaction::create([
+                'user_id' => Auth::id(),
+                'account_id' => $request->account_id,
+                'transaction_type_id' => $request->transaction_type_id,
+                'description' => $request->description,
+                'amount' => $request->amount,
+            ]);
+        }
+
         return redirect()->route('dashboard')->with('success', 'Transaction created successfully.');
     }
 
@@ -98,7 +140,7 @@ class TransactionController extends Controller
             'created_at' => 'required|date_format:Y-m-d\TH:i',
             'to_account_id' => 'required_if:transaction_type_id,3|exists:accounts,id',
         ]);
-    
+
         $transaction = Transaction::findOrFail($id);
         $transaction->account_id = $request->account_id;
         $transaction->transaction_type_id = $request->transaction_type_id;
@@ -106,7 +148,7 @@ class TransactionController extends Controller
         $transaction->amount = $request->amount;
         $transaction->created_at = $request->created_at;
         $transaction->save();
-    
+
         return redirect()->route('dashboard')->with('success', 'Transaction updated successfully.');
     }
 
@@ -123,12 +165,12 @@ class TransactionController extends Controller
         $userId = Auth::id();
         $column = $request->get('column', 'id');
         $direction = $request->get('direction', 'asc');
-    
+
         $transactions = Transaction::with(['account', 'transactionType'])
             ->where('user_id', $userId) // Ensure transactions are filtered by user_id
             ->orderBy($column, $direction)
             ->get();
-    
+
         return view('partials.transactions-table', compact('transactions'))->render();
     }
 }
