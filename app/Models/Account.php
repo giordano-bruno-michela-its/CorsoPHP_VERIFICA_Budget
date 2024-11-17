@@ -15,4 +15,9 @@ class Account extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function getBalanceAttribute()
+    {
+        return $this->transactions()->sum('amount');
+    }
 }
