@@ -52,7 +52,10 @@ class TransactionTypeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        {
+            $transactionType = TransactionType::findOrFail($id);
+            return view('transaction-types.edit', compact('transactionType'));
+        }
     }
 
     /**
@@ -60,7 +63,12 @@ class TransactionTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        {
+            $transactionType = TransactionType::findOrFail($id);
+            $transactionType->update($request->all());
+    
+            return redirect()->route('dashboard')->with('success', 'Transaction Type updated successfully.');
+        }
     }
 
     /**

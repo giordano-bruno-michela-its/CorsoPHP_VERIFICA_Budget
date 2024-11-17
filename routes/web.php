@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/transaction-types/create', [TransactionTypeController::class, 'create'])->name('transaction-types.create');
     Route::post('/transaction-types', [TransactionTypeController::class, 'store'])->name('transaction-types.store');
+    Route::get('/transaction-types/{id}/edit', [TransactionTypeController::class, 'edit'])->name('transaction-types.edit');
+    Route::patch('/transaction-types/{id}', [TransactionTypeController::class, 'update'])->name('transaction-types.update');
 });
 
 Route::middleware('auth')->group(function () {
