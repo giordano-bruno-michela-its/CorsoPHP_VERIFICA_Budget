@@ -17,7 +17,7 @@
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="w-full flex align-items-stretch">
-            <div class="w-1/4 mr-6 flex flex-col">
+            <div class="w-1/3 mr-6 flex flex-col">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4 flex-grow">
                     <div class="p-6 text-gray-900 dark:text-gray-100 flex flex-col justify-between h-full">
                         <h3 class="pb-4 text-lg font-medium text-gray-900 dark:text-gray-100">Account Balances</h3>
@@ -45,19 +45,23 @@
                     </div>
                 </div>
             </div>
-            <div class="w-1/4 flex flex-col">
+            <div class="w-1/3 flex flex-col">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4 flex-grow">
                     <div class="p-6 text-gray-900 dark:text-gray-100 flex flex-col justify-between h-full">
                         <h3 class="pb-4 text-lg font-medium text-gray-900 dark:text-gray-100">Select Period</h3>
                         <form method="GET" action="{{ route('dashboard') }}">
                             <div class="flex flex-col space-y-4">
-                                <div>
+                                <div class="flex items-center">
                                     <label for="start_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</label>
                                     <input type="date" id="start_date" name="start_date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ request('start_date', now()->startOfMonth()->toDateString()) }}">
+                                    <button type="button" onclick="adjustDate('start_date', -1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M-</button>
+                                    <button type="button" onclick="adjustDate('start_date', 1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M+</button>
                                 </div>
-                                <div>
+                                <div class="flex items-center">
                                     <label for="end_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">End Date</label>
                                     <input type="date" id="end_date" name="end_date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ request('end_date', now()->endOfMonth()->toDateString()) }}">
+                                    <button type="button" onclick="adjustDate('end_date', -1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M-</button>
+                                    <button type="button" onclick="adjustDate('end_date', 1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M+</button>
                                 </div>
                                 <div class="flex items-end">
                                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">Filter</button>
@@ -195,6 +199,13 @@
                 document.getElementById("transactionsTable").setAttribute("data-sort-dir", "desc");
                 sortTable('created_at', 'desc');
             });
+
+            function adjustDate(inputId, monthChange) {
+                const input = document.getElementById(inputId);
+                const date = new Date(input.value);
+                date.setMonth(date.getMonth() + monthChange);
+                input.value = date.toISOString().split('T')[0];
+            }
         </script>
 
     </div>
