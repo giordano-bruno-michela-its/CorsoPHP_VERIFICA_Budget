@@ -47,6 +47,7 @@ class TransactionController extends Controller
             'transaction_type_id' => 'required|exists:transaction_types,id',
             'description' => 'nullable|string',
             'amount' => 'required|numeric',
+            'to_account_id' => 'required_if:transaction_type_id,3|exists:accounts,id'
         ]);
     
         $transaction = new Transaction($request->all());
@@ -87,6 +88,7 @@ class TransactionController extends Controller
             'description' => 'nullable|string',
             'amount' => 'required|numeric',
             'created_at' => 'required|date_format:Y-m-d\TH:i',
+            'to_account_id' => 'required_if:transaction_type_id,3|exists:accounts,id',
         ]);
     
         $transaction = Transaction::findOrFail($id);

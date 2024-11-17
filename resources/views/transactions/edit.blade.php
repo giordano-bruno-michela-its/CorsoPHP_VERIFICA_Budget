@@ -28,9 +28,11 @@
                             <x-input-label for="transaction_type_id" :value="__('Transaction Type')" />
                             <select id="transaction_type_id" name="transaction_type_id" class="block mt-1 w-full dark:bg-gray-900 dark:text-gray-300">
                                 @foreach($transactionTypes as $type)
+                                @if($type->type !== 'transfer')
                                 <option value="{{ $type->id }}" {{ $transaction->transaction_type_id == $type->id ? 'selected' : '' }}>
                                     {{ $type->name }}
                                 </option>
+                                @endif
                                 @endforeach
                             </select>
                         </div>

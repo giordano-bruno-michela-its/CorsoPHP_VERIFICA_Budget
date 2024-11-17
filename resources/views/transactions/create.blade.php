@@ -27,6 +27,14 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="mt-4" id="to_account_div" style="display: none;">
+                            <x-input-label for="to_account_id" :value="__('To Account')" />
+                            <select id="to_account_id" name="to_account_id" class="block mt-1 w-full dark:bg-gray-900 dark:text-gray-300">
+                                @foreach ($accounts as $account)
+                                <option value="{{ $account->id }}">{{ $account->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="mt-4">
                             <x-input-label for="description" :value="__('Description')" />
                             <x-text-input id="description" class="block mt-1 w-full" type="text" name="description" />
@@ -49,3 +57,58 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    document.getElementById('transaction_type_id').addEventListener('change', function() {
+        var toAccountDiv = document.getElementById('to_account_div');
+        var toAccountSelect = document.getElementById('to_account_id');
+        var originAccountId = document.getElementById('account_id').value;
+
+        if (this.value == 3) { // Assuming 3 is the ID for transfer type
+            toAccountDiv.style.display = 'block';
+
+            // Filter out the selected origin account and set the first available account as selected
+            let firstAvailableAccount = null;
+            Array.from(toAccountSelect.options).forEach(function(option) {
+                if (option.value == originAccountId) {
+                    option.style.display = 'none';
+                } else {
+                    option.style.display = 'block';
+                    if (!firstAvailableAccount) {
+                        firstAvailableAccount = option;
+                    }
+                }
+            });
+
+            if (firstAvailableAccount) {
+                toAccountSelect.value = firstAvailableAccount.value;
+            }
+        } else {
+            toAccountDiv.style.display = 'none';
+        }
+    });
+
+    document.getElementById('account_id').addEventListener('change', function() {
+        var toAccountSelect = document.getElementById('to_account_id');
+        var originAccountId = this.value;
+
+        // Filter out the selected origin account
+        Array.from(toAccountSelect.options).forEach(function(option) {
+            option.style.display = option.value == originAccountId ? 'none' : 'block';
+        });
+
+        // If the transaction type is transfer, update the To Account selection
+        if (document.getElementById('transaction_type_id').value == 3) {
+            let firstAvailableAccount = null;
+            Array.from(toAccountSelect.options).forEach(function(option) {
+                if (option.style.display !== 'none' && !firstAvailableAccount) {
+                    firstAvailableAccount = option;
+                }
+            });
+
+            if (firstAvailableAccount) {
+                toAccountSelect.value = firstAvailableAccount.value;
+            }
+        }
+    });
+</script>
