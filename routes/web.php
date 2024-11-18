@@ -18,6 +18,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
     Route::get('/transactions/{id}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
     Route::patch('/transactions/{id}', [TransactionController::class, 'update'])->name('transactions.update');
+    Route::get('/transactions/{id}/delete', [TransactionController::class, 'delete'])->name('transactions.delete');
+    Route::delete('/transactions/{id}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
     Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
     Route::get('/transactions/sort', [TransactionController::class, 'sort'])->name('transactions.sort');
 

@@ -153,11 +153,36 @@ class TransactionController extends Controller
     }
 
     /**
+     * Show the form for deleting the specified resource.
+     */
+    public function delete(string $id)
+    {
+        $transaction = Transaction::findOrFail($id);
+
+        // Ensure the transaction belongs to the authenticated user
+        if ($transaction->user_id !== Auth::id()) {
+            return redirect()->route('dashboard')->with('error', 'You are not authorized to delete this transaction.');
+        }
+
+        return view('transactions.delete', compact('transaction'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        //
+    { {
+            $transaction = Transaction::findOrFail($id);
+
+            // Ensure the transaction belongs to the authenticated user
+            if ($transaction->user_id !== Auth::id()) {
+                return redirect()->route('dashboard')->with('error', 'You are not authorized to delete this transaction.');
+            }
+
+            $transaction->delete();
+
+            return redirect()->route('dashboard')->with('success', 'Transaction deleted successfully.');
+        }
     }
 
     public function sort(Request $request)
