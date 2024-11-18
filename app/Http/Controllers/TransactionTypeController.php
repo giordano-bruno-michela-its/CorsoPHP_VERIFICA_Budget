@@ -67,7 +67,7 @@ class TransactionTypeController extends Controller
             $transactionType = TransactionType::findOrFail($id);
             $transactionType->update($request->all());
     
-            return redirect()->route('dashboard')->with('success', 'Transaction Type updated successfully.');
+            return redirect()->route('settings')->with('success', 'Transaction Type updated successfully.');
         }
     }
 
