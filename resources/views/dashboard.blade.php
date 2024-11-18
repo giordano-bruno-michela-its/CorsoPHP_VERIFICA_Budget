@@ -50,20 +50,6 @@
                     </ul>
                 </div>
             </div>
-
-            <div x-data="{ open: false }" class="relative">
-                <button @click="open = !open" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">Manage Transaction Types</button>
-                <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-500 rounded shadow-lg">
-                    <ul>
-                        @foreach ($transactionTypes as $type)
-                        <li class="px-4 py-2 border-b border-gray-200 dark:border-gray-500">
-                            <span class="text-gray-200">{{ $type->name }}</span>
-                            <a href="{{ route('transaction-types.edit', $type->id) }}" class="text-blue-500 ml-2">Edit</a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
         </div>
 
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
