@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-1/2 mx-auto">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form method="POST" action="{{ route('transactions.store') }}">
+                    <form method="POST" action="{{ route('transactions.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="mt-4">
                             <x-input-label for="account_id" :value="__('Account')" />
@@ -42,6 +42,10 @@
                         <div class="mt-4">
                             <x-input-label for="amount" :value="__('Amount')" />
                             <x-text-input id="amount" class="block mt-1 w-full" type="number" step="0.01" name="amount" />
+                        </div>
+                        <div class="mt-4">
+                            <x-input-label for="file" :value="__('Upload File (Image or PDF)')" />
+                            <x-text-input id="file" class="block mt-1 w-full" type="file" name="file" accept="image/*,application/pdf" />
                         </div>
                         <div class="flex items-center justify-center mt-4">
                             <x-secondary-button onclick="window.history.back();">

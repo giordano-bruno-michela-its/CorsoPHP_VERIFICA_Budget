@@ -62,12 +62,21 @@ class TransactionController extends Controller
             'transaction_type_id' => 'required|exists:transaction_types,id',
             'description' => 'nullable|string',
             'amount' => 'required|numeric',
-            'to_account_id' => 'required_if:transaction_type_id,3|exists:accounts,id'
+            'to_account_id' => 'required_if:transaction_type_id,3|exists:accounts,id',
+            'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
         ]);
+
+        $filePath = null;
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $originalName = $file->getClientOriginalName();
+            $fileName = Str::slug(pathinfo($originalName, PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('transactions', $fileName, 'public');
+        }
 
         if ($request->transaction_type_id == 3) {
             // Handle transfer
-            DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request, $filePath) {
                 $transfer = Transfer::create([
                     'user_id' => Auth::id(),
                     'from_account_id' => $request->account_id,
@@ -84,6 +93,7 @@ class TransactionController extends Controller
                     'description' => $request->description,
                     'amount' => -$request->amount, // Negative amount for debit
                     'to_account_id' => $request->to_account_id, // Store the destination account ID
+                    'file_path' => $filePath, // Add this line
                 ]);
 
                 // Create a corresponding transaction for the destination account (credit)
@@ -93,6 +103,7 @@ class TransactionController extends Controller
                     'transaction_type_id' => $request->transaction_type_id,
                     'description' => $request->description,
                     'amount' => $request->amount, // Positive amount for credit
+                    'file_path' => $filePath, // Add this line
                 ]);
             });
         } else {
@@ -103,6 +114,7 @@ class TransactionController extends Controller
                 'transaction_type_id' => $request->transaction_type_id,
                 'description' => $request->description,
                 'amount' => $request->amount,
+                'file_path' => $filePath, // Add this line
             ]);
         }
 
