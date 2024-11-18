@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Account;
 use App\Models\Transfer;
 use App\Models\Transaction;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\TransactionType;
 use Illuminate\Support\Facades\DB;
@@ -154,7 +155,10 @@ class TransactionController extends Controller
             }
 
             // Store the new file
-            $filePath = $request->file('file')->store('transactions', 'public');
+            $file = $request->file('file');
+            $originalName = $file->getClientOriginalName();
+            $fileName = Str::slug(pathinfo($originalName, PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('transactions', $fileName, 'public');
             $transaction->file_path = $filePath;
         }
 
