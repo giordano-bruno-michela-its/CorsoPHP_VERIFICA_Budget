@@ -84,7 +84,7 @@
                                 <th class="cursor-pointer px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700" onclick="sortTable('amount', toggleSortDirection('amount'))">
                                     Amount <span id="amount_arrow" class="sort-arrow">&#9650;</span>
                                 </th>
-                                <th class="cursor-pointer px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700 w-16">Mod</th>
+                                <th class="cursor-pointer px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700 w-16"></th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" id="transactionsTable">
