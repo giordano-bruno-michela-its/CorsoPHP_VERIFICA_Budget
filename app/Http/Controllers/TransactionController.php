@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\TransactionType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TransactionController extends Controller
 {
@@ -137,8 +138,7 @@ class TransactionController extends Controller
             'transaction_type_id' => 'required|exists:transaction_types,id',
             'description' => 'nullable|string',
             'amount' => 'required|numeric',
-            'created_at' => 'required|date_format:Y-m-d\TH:i',
-            'to_account_id' => 'required_if:transaction_type_id,3|exists:accounts,id',
+            'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048', // Add this line
         ]);
 
         $transaction = Transaction::findOrFail($id);
@@ -146,7 +146,18 @@ class TransactionController extends Controller
         $transaction->transaction_type_id = $request->transaction_type_id;
         $transaction->description = $request->description;
         $transaction->amount = $request->amount;
-        $transaction->created_at = $request->created_at;
+
+        if ($request->hasFile('file')) {
+            // Delete the old file if it exists
+            if ($transaction->file_path) {
+                Storage::delete('public/' . $transaction->file_path);
+            }
+
+            // Store the new file
+            $filePath = $request->file('file')->store('transactions', 'public');
+            $transaction->file_path = $filePath;
+        }
+
         $transaction->save();
 
         return redirect()->route('dashboard')->with('success', 'Transaction updated successfully.');

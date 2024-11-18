@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('to_account_id')->nullable()->constrained('accounts')->restrictOnDelete();
             $table->text('description')->nullable()->default("No description");
             $table->decimal('amount', 15, 2);
+            $table->string('file_path')->nullable();
             
             $table->timestamps();
         });

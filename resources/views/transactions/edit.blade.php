@@ -6,10 +6,10 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-1/2 mx-auto">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form method="POST" action="{{ route('transactions.update', $transaction->id) }}">
+                    <form method="POST" action="{{ route('transactions.update', $transaction->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
 
@@ -48,8 +48,8 @@
                         </div>
 
                         <div class="mt-4">
-                            <x-input-label for="created_at" :value="__('Date and Time')" />
-                            <x-text-input id="created_at" class="block mt-1 w-full" type="datetime-local" name="created_at" value="{{ $transaction->created_at->format('Y-m-d\TH:i') }}" />
+                            <x-input-label for="file" :value="__('Upload File (Image or PDF)')" />
+                            <x-text-input id="file" class="block mt-1 w-full" type="file" name="file" accept="image/*,application/pdf" />
                         </div>
 
                         <div class="flex items-center justify-center mt-4">
@@ -64,5 +64,20 @@
                 </div>
             </div>
         </div>
+
+        @if($transaction->file_path)
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-1/2 mx-auto ml-4 mt-8">
+            <div class="p-6 text-gray-900 dark:text-gray-100">
+                <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 leading-tight mb-4">{{ __('Uploaded File') }}</h3>
+                @if(Str::endsWith($transaction->file_path, ['.jpg', '.jpeg', '.png', '.gif', '.svg']))
+                <img src="{{ asset('storage/' . $transaction->file_path) }}" alt="Uploaded Image" class="w-full h-auto">
+                @elseif(Str::endsWith($transaction->file_path, ['.pdf']))
+                <iframe src="{{ asset('storage/' . $transaction->file_path) }}" class="w-full h-96"></iframe>
+                @endif
+                <a href="{{ asset('storage/' . $transaction->file_path) }}" target="_blank" class="text-blue-500 hover:underline mt-4 block">View File</a>
+            </div>
+        </div>
+        @endif
+
     </div>
 </x-app-layout>

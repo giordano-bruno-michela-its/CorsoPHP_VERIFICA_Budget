@@ -15,6 +15,7 @@ class Transaction extends Model
         'description',
         'amount',
         'to_account_id',
+        'file_path',
     ];
 
     public function user()
