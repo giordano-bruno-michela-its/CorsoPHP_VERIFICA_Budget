@@ -160,15 +160,15 @@
             </div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            var transactionsSortUrl = "{{ route('transactions.sort') }}";
-        </script>
-        <script src="{{ asset('js/dashboard.js') }}"></script>
-
+        
     </div>
-
-
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var transactionsSortUrl = "{{ route('transactions.sort') }}";
+    </script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
+    
 
     <script>
         function confirmDelete() {
