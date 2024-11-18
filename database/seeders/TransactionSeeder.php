@@ -29,8 +29,8 @@ class TransactionSeeder extends Seeder
             Transaction::create([
                 'user_id' => 1,
                 'account_id' => 1,
-                'transaction_type_id' => $faker->numberBetween(1, 3),
-                'description' => $faker->sentence,
+                'transaction_type_id' => $faker->numberBetween(1, 2),
+                'description' => $faker->text(20),
                 'amount' => $faker->randomFloat(2, 1, 1000),
             ]);
         }
