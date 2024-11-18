@@ -33,12 +33,12 @@ class AccountController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
-    
+
         $account = new Account($request->all());
         $account->user_id = Auth::user()->id; // Set the user_id to the currently authenticated user
         $account->save();
-    
-        return redirect()->route('dashboard')->with('success', 'Account created successfully.');
+
+        return redirect()->route('settings')->with('success', 'Account created successfully.');
     }
 
     /**
@@ -54,7 +54,8 @@ class AccountController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $account = Account::findOrFail($id);
+        return view('accounts.edit', compact('account'));
     }
 
     /**
@@ -62,7 +63,13 @@ class AccountController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $account = Account::findOrFail($id);
+        $account->update($request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+        ]));
+
+        return redirect()->route('settings')->with('status', 'Account updated successfully!');
     }
 
     /**
