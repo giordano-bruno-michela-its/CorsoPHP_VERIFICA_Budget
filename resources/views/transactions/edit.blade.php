@@ -72,9 +72,8 @@
                 @if(Str::endsWith($transaction->file_path, ['.jpg', '.jpeg', '.png', '.gif', '.svg']))
                 <img src="{{ asset('storage/' . $transaction->file_path) }}" alt="Uploaded Image" class="w-full h-auto">
                 @elseif(Str::endsWith($transaction->file_path, ['.pdf']))
-                <iframe src="{{ asset('storage/' . $transaction->file_path) }}" class="w-full h-96"></iframe>
+                <a href="{{ asset('storage/' . $transaction->file_path) }}" target="_blank" class="text-blue-500 hover:underline mt-4 block">Download PDF</a>
                 @endif
-                <a href="{{ asset('storage/' . $transaction->file_path) }}" target="_blank" class="text-blue-500 hover:underline mt-4 block">View File</a>
             </div>
         </div>
         @endif
