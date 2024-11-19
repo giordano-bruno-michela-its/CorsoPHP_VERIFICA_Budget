@@ -48,8 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .getElementById("transactionsTable")
         .setAttribute("data-sort-dir", "desc");
 
-    if (startDate && endDate) {
-        sortTable("created_at", "desc");
+    if (!startDate && !endDate) {
+        sortTable('created_at', 'desc');
     }
 });
 
@@ -63,16 +63,13 @@ function adjustDate(id, months) {
         date = today;
     }
 
-    input.value =
-        date.toISOString().split("T")[0] +
-        "T" +
-        date.toTimeString().split(" ")[0];
+    input.value = date.toISOString().split('T')[0] + 'T' + date.toTimeString().split(' ')[0];
     validateDates();
 }
 
 function validateDates() {
-    const startDateInput = document.getElementById("start_date");
-    const endDateInput = document.getElementById("end_date");
+    const startDateInput = document.getElementById('start_date');
+    const endDateInput = document.getElementById('end_date');
 
     const startDate = new Date(startDateInput.value);
     const endDate = new Date(endDateInput.value);
