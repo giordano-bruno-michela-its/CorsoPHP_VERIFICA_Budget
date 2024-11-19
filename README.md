@@ -21,12 +21,13 @@ Genera la chiave dell'applicazione:
 php artisan key:generate
 
 ## Esecuzione delle Migrazioni
-Esegui le migrazioni del database:
+Esegui le migrazioni del database e i seed delle tabelle di default:
 
-php artisan migrate
+php artisan migrate<br>
+php artisan db:seed
 
 ## Compilazione degli Asset
-Compila gli asset frontend usando Vite:
+Compila gli asset frontend:
 
 npm run build
 
