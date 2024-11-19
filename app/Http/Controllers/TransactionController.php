@@ -62,6 +62,7 @@ class TransactionController extends Controller
             'transaction_type_id' => 'required|exists:transaction_types,id',
             'description' => 'nullable|string',
             'amount' => 'required|numeric',
+            'created_at' => 'required|date_format:Y-m-d\TH:i',
             'to_account_id' => 'required_if:transaction_type_id,3|exists:accounts,id',
             'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
         ]);
@@ -86,7 +87,7 @@ class TransactionController extends Controller
                 ]);
 
                 // Create a single transaction record for the transfer
-                Transaction::create([
+                $transaction = new Transaction([
                     'user_id' => Auth::id(),
                     'account_id' => $request->account_id,
                     'transaction_type_id' => $request->transaction_type_id,
@@ -95,9 +96,11 @@ class TransactionController extends Controller
                     'to_account_id' => $request->to_account_id, // Store the destination account ID
                     'file_path' => $filePath,
                 ]);
+                $transaction->created_at = $request->created_at;
+                $transaction->save();
 
                 // Create a corresponding transaction for the destination account (credit)
-                Transaction::create([
+                $transaction = new Transaction([
                     'user_id' => Auth::id(),
                     'account_id' => $request->to_account_id,
                     'transaction_type_id' => $request->transaction_type_id,
@@ -105,10 +108,12 @@ class TransactionController extends Controller
                     'amount' => $request->amount, // Positive amount for credit
                     'file_path' => $filePath,
                 ]);
+                $transaction->created_at = $request->created_at;
+                $transaction->save();
             });
         } else {
             // Handle regular transaction
-            Transaction::create([
+            $transaction = new Transaction([
                 'user_id' => Auth::id(),
                 'account_id' => $request->account_id,
                 'transaction_type_id' => $request->transaction_type_id,
@@ -116,6 +121,8 @@ class TransactionController extends Controller
                 'amount' => $request->amount,
                 'file_path' => $filePath,
             ]);
+            $transaction->created_at = $request->created_at;
+            $transaction->save();
         }
 
         return redirect()->route('dashboard')->with('success', 'Transaction created successfully.');

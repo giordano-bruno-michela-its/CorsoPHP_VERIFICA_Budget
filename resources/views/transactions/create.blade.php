@@ -36,6 +36,10 @@
                             </select>
                         </div>
                         <div class="mt-4">
+                            <x-input-label for="created_at" :value="__('Date and Time')" />
+                            <x-text-input id="created_at" class="block mt-1 w-full" type="datetime-local" name="created_at" value="{{ old('created_at', now()->format('Y-m-d\TH:i')) }}" />
+                        </div>
+                        <div class="mt-4">
                             <x-input-label for="description" :value="__('Description')" />
                             <x-text-input id="description" class="block mt-1 w-full" type="text" name="description" />
                         </div>
