@@ -93,7 +93,7 @@ class TransactionController extends Controller
                     'description' => $request->description,
                     'amount' => -$request->amount, // Negative amount for debit
                     'to_account_id' => $request->to_account_id, // Store the destination account ID
-                    'file_path' => $filePath, // Add this line
+                    'file_path' => $filePath,
                 ]);
 
                 // Create a corresponding transaction for the destination account (credit)
@@ -103,7 +103,7 @@ class TransactionController extends Controller
                     'transaction_type_id' => $request->transaction_type_id,
                     'description' => $request->description,
                     'amount' => $request->amount, // Positive amount for credit
-                    'file_path' => $filePath, // Add this line
+                    'file_path' => $filePath,
                 ]);
             });
         } else {
@@ -114,7 +114,7 @@ class TransactionController extends Controller
                 'transaction_type_id' => $request->transaction_type_id,
                 'description' => $request->description,
                 'amount' => $request->amount,
-                'file_path' => $filePath, // Add this line
+                'file_path' => $filePath,
             ]);
         }
 
@@ -151,7 +151,7 @@ class TransactionController extends Controller
             'transaction_type_id' => 'required|exists:transaction_types,id',
             'description' => 'nullable|string',
             'amount' => 'required|numeric',
-            'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048', // Add this line
+            'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
         ]);
 
         $transaction = Transaction::findOrFail($id);
@@ -186,7 +186,6 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::findOrFail($id);
 
-        // Ensure the transaction belongs to the authenticated user
         if ($transaction->user_id !== Auth::id()) {
             return redirect()->route('dashboard')->with('error', 'You are not authorized to delete this transaction.');
         }
@@ -201,7 +200,6 @@ class TransactionController extends Controller
     { {
             $transaction = Transaction::findOrFail($id);
 
-            // Ensure the transaction belongs to the authenticated user
             if ($transaction->user_id !== Auth::id()) {
                 return redirect()->route('dashboard')->with('error', 'You are not authorized to delete this transaction.');
             }
@@ -219,7 +217,7 @@ class TransactionController extends Controller
         $direction = $request->get('direction', 'asc');
 
         $transactions = Transaction::with(['account', 'transactionType'])
-            ->where('user_id', $userId) // Ensure transactions are filtered by user_id
+            ->where('user_id', $userId)
             ->orderBy($column, $direction)
             ->get();
 

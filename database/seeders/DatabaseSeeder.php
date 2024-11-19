@@ -22,20 +22,20 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        // Transaction types
+        // Default transaction types
 
         TransactionType::create([
-            'name' => 'Accredito',
+            'name' => 'Income',
             'type' => 'income',
         ]);
 
         TransactionType::create([
-            'name' => 'Addebito',
+            'name' => 'Expense',
             'type' => 'expense',
         ]);
 
         TransactionType::create([
-            'name' => 'Trasferimento',
+            'name' => 'Transfer',
             'type' => 'transfer',
         ]);
     }

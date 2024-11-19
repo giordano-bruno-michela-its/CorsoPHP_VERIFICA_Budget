@@ -17,12 +17,12 @@ class TransactionSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        // Create a default account
-        $account = Account::create([
+        // Create a default account (old)
+/*         $account = Account::create([
             'user_id' => 1,
             'name' => 'Conto base',
             'description' => 'Default account',
-        ]);
+        ]); */
 
         // Create 20 fake transactions for the default account
         for ($i = 0; $i < 20; $i++) {

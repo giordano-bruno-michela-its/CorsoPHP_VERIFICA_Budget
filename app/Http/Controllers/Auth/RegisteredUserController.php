@@ -46,9 +46,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        // Create a default account for the user
         Account::create([
             'user_id' => $user->id,
-            'name' => 'Conto base',
+            'name' => 'Base account',
             'description' => 'Default account',
         ]);
 

@@ -35,7 +35,7 @@ class AccountController extends Controller
         ]);
 
         $account = new Account($request->all());
-        $account->user_id = Auth::user()->id; // Set the user_id to the currently authenticated user
+        $account->user_id = Auth::user()->id;
         $account->save();
 
         return redirect()->route('settings')->with('success', 'Account created successfully.');

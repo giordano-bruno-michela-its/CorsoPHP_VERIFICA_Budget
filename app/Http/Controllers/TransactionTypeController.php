@@ -36,7 +36,7 @@ class TransactionTypeController extends Controller
 
         TransactionType::create($request->all());
 
-        return redirect()->route('dashboard')->with('success', 'Transaction type created successfully.');
+        return redirect()->route('settings')->with('success', 'Transaction type created successfully.');
     }
 
     /**
