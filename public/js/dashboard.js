@@ -15,7 +15,9 @@ function sortTable(column, direction) {
         const cellB = b.cells[columnIndex].innerText;
 
         if (column === 'amount') {
-            return direction === 'asc' ? parseFloat(cellA) - parseFloat(cellB) : parseFloat(cellB) - parseFloat(cellA);
+            const amountA = parseFloat(cellA.replace(/,/g, ''));
+            const amountB = parseFloat(cellB.replace(/,/g, ''));
+            return direction === 'asc' ? amountA - amountB : amountB - amountA;
         } else if (column === 'created_at') {
             return direction === 'asc' ? new Date(cellA) - new Date(cellB) : new Date(cellB) - new Date(cellA);
         } else {
