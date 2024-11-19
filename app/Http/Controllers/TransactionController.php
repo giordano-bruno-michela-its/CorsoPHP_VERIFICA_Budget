@@ -22,21 +22,23 @@ class TransactionController extends Controller
     {
         $userId = Auth::id();
         $accounts = Account::where('user_id', $userId)->get();
-        $transactions = Transaction::with(['account', 'transactionType'])
-            ->where('user_id', $userId)
-            ->get();
         $transactionTypes = TransactionType::all();
         $totalBalance = $accounts->sum('balance');
 
-        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
-        $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
+        $query = Transaction::with(['account', 'transactionType'])
+            ->where('user_id', $userId);
 
-        $periodBalance = Transaction::where('user_id', $userId)
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->get()
-            ->sum(function ($transaction) {
-                return $transaction->transactionType->type === 'expense' ? -$transaction->amount : $transaction->amount;
-            });
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        $transactions = $query->get();
+
+        $periodBalance = $transactions->sum(function ($transaction) {
+            return $transaction->transactionType->type === 'expense' ? -$transaction->amount : $transaction->amount;
+        });
 
         return view('dashboard', compact('accounts', 'transactions', 'transactionTypes', 'totalBalance', 'periodBalance'));
     }
