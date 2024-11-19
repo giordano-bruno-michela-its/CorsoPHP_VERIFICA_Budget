@@ -50,7 +50,7 @@ class TransactionController extends Controller
     {
         $userId = Auth::id();
         $accounts = Account::where('user_id', $userId)->get();
-        $transactionTypes = TransactionType::all();
+        $transactionTypes = TransactionType::where('user_id', $userId)->get();
         return view('transactions.create', compact('accounts', 'transactionTypes'));
     }
 
@@ -146,7 +146,7 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         $userId = Auth::id();
         $accounts = Account::where('user_id', $userId)->get();
-        $transactionTypes = TransactionType::all();
+        $transactionTypes = TransactionType::where('user_id', $userId)->get();
         return view('transactions.edit', compact('transaction', 'accounts', 'transactionTypes'));
     }
 
