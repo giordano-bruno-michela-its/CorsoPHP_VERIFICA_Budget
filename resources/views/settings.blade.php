@@ -7,8 +7,8 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @include('partials.transactions-types')
             @include('partials.accounts')
+            @include('partials.transactions-types')
         </div>
     </div>
 </x-app-layout>
