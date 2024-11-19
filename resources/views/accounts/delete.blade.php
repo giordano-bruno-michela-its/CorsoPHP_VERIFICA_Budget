@@ -12,7 +12,7 @@
                     <div class="mb-4 text-red-600 font-bold">
                         {{ __('Warning: Deleting this account will also delete all related transactions.') }}
                     </div>
-                    <form method="POST" action="{{ route('accounts.destroy', $account->id) }}">
+                    <form method="POST" action="{{ route('accounts.destroy', $account->id) }}" x-data="{ showModal: false }" @submit.prevent="showModal = true">
                         @csrf
                         @method('DELETE')
 
@@ -33,6 +33,22 @@
                             <x-danger-button class="ml-4">
                                 {{ __('Delete Account') }}
                             </x-danger-button>
+                        </div>
+
+                        <!-- Modal -->
+                        <div x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+                                <h2 class="text-lg font-bold text-red-600">{{ __('Are you sure you want to delete this account?') }}</h2>
+                                <p class="mt-4">{{ __('Deleting this account will also delete all related transactions.') }}</p>
+                                <div class="flex items-center justify-end mt-4">
+                                    <x-secondary-button @click="showModal = false">
+                                        {{ __('Cancel') }}
+                                    </x-secondary-button>
+                                    <x-danger-button class="ml-4" @click="$el.closest('form').submit()">
+                                        {{ __('Delete Account') }}
+                                    </x-danger-button>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
