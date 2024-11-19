@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('transaction_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
             $table->text('description')->nullable()->default("No description");
             $table->enum('type', ['income', 'expense', 'transfer']);
             $table->timestamps();

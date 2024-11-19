@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TransactionType;
 use Illuminate\Http\Request;
+use App\Models\TransactionType;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionTypeController extends Controller
 {
@@ -12,7 +13,8 @@ class TransactionTypeController extends Controller
      */
     public function index()
     {
-        //
+        $transactionTypes = TransactionType::where('user_id', Auth::id())->get();
+        return view('transaction-types.index', compact('transactionTypes'));
     }
 
     /**
@@ -34,7 +36,12 @@ class TransactionTypeController extends Controller
             'type' => 'required|in:income,expense,transfer',
         ]);
 
-        TransactionType::create($request->all());
+        TransactionType::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'type' => $request->type,
+            'user_id' => Auth::id(),
+        ]);
 
         return redirect()->route('settings')->with('success', 'Transaction type created successfully.');
     }
@@ -52,10 +59,8 @@ class TransactionTypeController extends Controller
      */
     public function edit(string $id)
     {
-        {
-            $transactionType = TransactionType::findOrFail($id);
-            return view('transaction-types.edit', compact('transactionType'));
-        }
+        $transactionType = TransactionType::where('user_id', Auth::id())->findOrFail($id);
+        return view('transaction-types.edit', compact('transactionType'));
     }
 
     /**
@@ -63,12 +68,10 @@ class TransactionTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        {
-            $transactionType = TransactionType::findOrFail($id);
-            $transactionType->update($request->all());
-    
-            return redirect()->route('settings')->with('success', 'Transaction Type updated successfully.');
-        }
+        $transactionType = TransactionType::where('user_id', Auth::id())->findOrFail($id);
+        $transactionType->update($request->all());
+
+        return redirect()->route('settings')->with('success', 'Transaction Type updated successfully.');
     }
 
     /**

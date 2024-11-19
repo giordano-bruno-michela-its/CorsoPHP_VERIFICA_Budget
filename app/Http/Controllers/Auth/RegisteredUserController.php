@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Account;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Models\TransactionType;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -51,6 +52,25 @@ class RegisteredUserController extends Controller
             'user_id' => $user->id,
             'name' => 'Base account',
             'description' => 'Default account',
+        ]);
+
+        // Create default transaction types for the user
+        TransactionType::create([
+            'name' => 'Income',
+            'type' => 'income',
+            'user_id' => $user->id,
+        ]);
+
+        TransactionType::create([
+            'name' => 'Expense',
+            'type' => 'expense',
+            'user_id' => $user->id,
+        ]);
+
+        TransactionType::create([
+            'name' => 'Transfer',
+            'type' => 'transfer',
+            'user_id' => $user->id,
         ]);
 
         return redirect(route('dashboard', absolute: false));

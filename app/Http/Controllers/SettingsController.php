@@ -11,7 +11,7 @@ class SettingsController extends Controller
 {
     public function index()
     {
-        $transactionTypes = TransactionType::all();
+        $transactionTypes = TransactionType::where('user_id', Auth::id())->get();
         $accounts = Account::where('user_id', Auth::id())->get();
         return view('settings', compact('transactionTypes', 'accounts'));
     }

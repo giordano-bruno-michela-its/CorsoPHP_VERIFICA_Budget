@@ -22,21 +22,5 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        // Default transaction types
-
-        TransactionType::create([
-            'name' => 'Income',
-            'type' => 'income',
-        ]);
-
-        TransactionType::create([
-            'name' => 'Expense',
-            'type' => 'expense',
-        ]);
-
-        TransactionType::create([
-            'name' => 'Transfer',
-            'type' => 'transfer',
-        ]);
     }
 }
