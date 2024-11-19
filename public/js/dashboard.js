@@ -1,30 +1,36 @@
 function sortTable(column, direction) {
-    const startDate = document.getElementById("start_date").value;
-    const endDate = document.getElementById("end_date").value;
+    const table = document.getElementById("transactionsTable");
+    const rows = Array.from(table.rows);
 
-    $.ajax({
-        url: transactionsSortUrl,
-        type: "GET",
-        data: {
-            column: column,
-            direction: direction,
-            start_date: startDate,
-            end_date: endDate,
-        },
-        success: function (data) {
-            $("#transactionsTable").html(data);
-            document
-                .getElementById("transactionsTable")
-                .setAttribute("data-sort-dir", direction);
-            updateSortArrows(column, direction);
-        },
+    const columnIndex = {
+        'created_at': 0,
+        'account': 1,
+        'transaction_type': 2,
+        'description': 3,
+        'amount': 4
+    }[column];
+
+    rows.sort((a, b) => {
+        const cellA = a.cells[columnIndex].innerText;
+        const cellB = b.cells[columnIndex].innerText;
+
+        if (column === 'amount') {
+            return direction === 'asc' ? parseFloat(cellA) - parseFloat(cellB) : parseFloat(cellB) - parseFloat(cellA);
+        } else if (column === 'created_at') {
+            return direction === 'asc' ? new Date(cellA) - new Date(cellB) : new Date(cellB) - new Date(cellA);
+        } else {
+            return direction === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        }
     });
+
+    rows.forEach(row => table.appendChild(row));
+
+    document.getElementById("transactionsTable").setAttribute("data-sort-dir", direction);
+    updateSortArrows(column, direction);
 }
 
 function toggleSortDirection(column) {
-    const currentDirection = document
-        .getElementById("transactionsTable")
-        .getAttribute("data-sort-dir");
+    const currentDirection = document.getElementById("transactionsTable").getAttribute("data-sort-dir");
     return currentDirection === "asc" ? "desc" : "asc";
 }
 
@@ -41,16 +47,8 @@ function updateSortArrows(column, direction) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const startDate = document.getElementById("start_date").value;
-    const endDate = document.getElementById("end_date").value;
-
-    document
-        .getElementById("transactionsTable")
-        .setAttribute("data-sort-dir", "desc");
-
-    if (!startDate && !endDate) {
-        sortTable('created_at', 'desc');
-    }
+    document.getElementById("transactionsTable").setAttribute("data-sort-dir", "desc");
+    sortTable('created_at', 'desc');
 });
 
 function adjustDate(id, months) {
