@@ -10,6 +10,11 @@ Assicurati di avere tutte le dipendenze necessarie installate. Esegui i seguenti
 composer install<br>
 npm install
 
+## Compilazione degli Asset
+Compila gli asset frontend:
+
+npm run build
+
 ## Configurazione dell'Ambiente
 Copia il file .env.example in .env e configura le variabili d'ambiente:
 
@@ -25,11 +30,6 @@ Esegui le migrazioni del database e i seed delle tabelle di default:
 
 php artisan migrate<br>
 php artisan db:seed
-
-## Compilazione degli Asset
-Compila gli asset frontend:
-
-npm run build
 
 ## Avvio del Server di Sviluppo
 Avvia il server di sviluppo di Laravel:
