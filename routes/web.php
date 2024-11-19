@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/accounts/{id}/edit', [AccountController::class, 'edit'])->name('accounts.edit');
     Route::patch('/accounts/{id}', [AccountController::class, 'update'])->name('accounts.update');
     Route::post('/accounts', [AccountController::class, 'store'])->name('accounts.store');
+    Route::get('/accounts/{id}/delete', [AccountController::class, 'delete'])->name('accounts.delete');
+    Route::delete('/accounts/{id}', [AccountController::class, 'destroy'])->name('accounts.destroy');
 
     Route::get('/transaction-types/create', [TransactionTypeController::class, 'create'])->name('transaction-types.create');
     Route::get('/transaction-types/{id}/edit', [TransactionTypeController::class, 'edit'])->name('transaction-types.edit');

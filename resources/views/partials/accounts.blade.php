@@ -14,6 +14,7 @@
                     <tr>
                         <th class="px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700">Name</th>
                         <th class="px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700">Description</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider border border-gray-700 w-16"></th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -21,6 +22,15 @@
                     <tr class="bg-white dark:bg-gray-900 hover:bg-gray-600 cursor-pointer" onclick="window.location='{{ route('accounts.edit', $account->id) }}'">
                         <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $account->name }}</td>
                         <td class="px-6 py-1 whitespace-nowrap border border-gray-700">{{ $account->description }}</td>
+                        <td class="px-5 py-1 whitespace-nowrap border border-gray-700" onclick="event.stopPropagation();">
+                            <div class="flex space-x-2">
+                                <a href="{{ route('accounts.delete', $account->id) }}" class="text-red-500 hover:text-red-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M6 2a1 1 0 00-1 1v1H3a1 1 0 000 2h1v11a2 2 0 002 2h8a2 2 0 002-2V6h1a1 1 0 100-2h-2V3a1 1 0 00-1-1H6zm3 4a1 1 0 112 0v9a1 1 0 11-2 0V6z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

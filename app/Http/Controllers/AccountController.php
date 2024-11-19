@@ -71,12 +71,31 @@ class AccountController extends Controller
 
         return redirect()->route('settings')->with('status', 'Account updated successfully!');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
+    public function delete(string $id)
+    {
+        $account = Account::findOrFail($id);
+
+        if ($account->user_id !== Auth::id()) {
+            return redirect()->route('settings')->with('error', 'You are not authorized to delete this account.');
+        }
+
+        return view('accounts.delete', compact('account'));
+    }
+
     public function destroy(string $id)
     {
-        //
+        $account = Account::findOrFail($id);
+
+        if ($account->user_id !== Auth::id()) {
+            return redirect()->route('settings')->with('error', 'You are not authorized to delete this account.');
+        }
+
+        $account->delete();
+
+        return redirect()->route('settings')->with('success', 'Account deleted successfully.');
     }
 }
