@@ -12,7 +12,7 @@
                     <div class="mb-4 text-red-600 font-bold">
                         {{ __('Warning: Deleting this account will also delete all related transactions.') }}
                     </div>
-                    <form method="POST" action="{{ route('accounts.destroy', $account->id) }}">
+                    <form id="delete-account-form" method="POST" action="{{ route('accounts.destroy', $account->id) }}">
                         @csrf
                         @method('DELETE')
 
@@ -52,7 +52,7 @@
                                     {{ __('Cancel') }}
                                 </x-secondary-button>
 
-                                <x-danger-button class="ml-4" x-on:click="$dispatch('close'); $el.closest('form').submit();">
+                                <x-danger-button class="ml-4" x-on:click="$dispatch('close'); document.getElementById('delete-account-form').submit();">
                                     {{ __('Delete Account') }}
                                 </x-danger-button>
                             </div>
