@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/transaction-types/{id}/edit', [TransactionTypeController::class, 'edit'])->name('transaction-types.edit');
     Route::patch('/transaction-types/{id}', [TransactionTypeController::class, 'update'])->name('transaction-types.update');
     Route::post('/transaction-types', [TransactionTypeController::class, 'store'])->name('transaction-types.store');
+    Route::get('/transaction-types/{id}/delete', [TransactionTypeController::class, 'delete'])->name('transaction-types.delete');
+    Route::delete('/transaction-types/{id}', [TransactionTypeController::class, 'destroy'])->name('transaction-types.destroy');
 });
 
 Route::middleware('auth')->group(function () {

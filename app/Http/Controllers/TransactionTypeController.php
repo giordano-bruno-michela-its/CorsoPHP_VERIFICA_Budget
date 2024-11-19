@@ -77,8 +77,18 @@ class TransactionTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    public function delete(string $id)
+    {
+        $transactionType = TransactionType::where('user_id', Auth::id())->findOrFail($id);
+
+        return view('transaction-types.delete', compact('transactionType'));
+    }
+
     public function destroy(string $id)
     {
-        //
+        $transactionType = TransactionType::where('user_id', Auth::id())->findOrFail($id);
+        $transactionType->delete();
+
+        return redirect()->route('settings')->with('success', 'Transaction type deleted successfully.');
     }
 }
