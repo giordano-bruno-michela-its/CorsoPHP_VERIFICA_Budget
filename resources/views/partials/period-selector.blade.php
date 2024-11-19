@@ -20,8 +20,5 @@
                 </div>
             </div>
         </form>
-        <div class="mt-4">
-            <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100">Selected Period: {{ number_format($periodBalance, 2) }} &euro;</h4>
-        </div>
     </div>
 </div>
