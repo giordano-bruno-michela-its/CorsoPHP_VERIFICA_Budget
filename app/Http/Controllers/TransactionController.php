@@ -151,6 +151,7 @@ class TransactionController extends Controller
             'transaction_type_id' => 'required|exists:transaction_types,id',
             'description' => 'nullable|string',
             'amount' => 'required|numeric',
+            'created_at' => 'required|date_format:Y-m-d\TH:i',
             'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
         ]);
 
@@ -159,6 +160,7 @@ class TransactionController extends Controller
         $transaction->transaction_type_id = $request->transaction_type_id;
         $transaction->description = $request->description;
         $transaction->amount = $request->amount;
+        $transaction->created_at = $request->created_at;
 
         if ($request->hasFile('file')) {
             // Delete the old file if it exists
