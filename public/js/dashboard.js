@@ -46,7 +46,7 @@ function adjustDate(id, months) {
         date = today;
     }
 
-    input.value = date.toISOString().split('T')[0];
+    input.value = date.toISOString().split('T')[0] + 'T' + date.toTimeString().split(' ')[0];
     validateDates();
 }
 

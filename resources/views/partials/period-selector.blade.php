@@ -5,13 +5,13 @@
             <div class="flex flex-col space-y-4">
                 <div class="flex items-center">
                     <label for="start_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</label>
-                    <input type="date" id="start_date" name="start_date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ request('start_date', now()->startOfMonth()->toDateString()) }}" max="{{ now()->toDateString() }}" onchange="validateDates()">
+                    <input type="datetime-local" id="start_date" name="start_date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ request('start_date', now()->startOfMonth()->format('Y-m-d\TH:i')) }}" max="{{ now()->format('Y-m-d\TH:i') }}" onchange="validateDates()">
                     <button type="button" onclick="adjustDate('start_date', -1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M-</button>
                     <button type="button" onclick="adjustDate('start_date', 1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M+</button>
                 </div>
                 <div class="flex items-center">
                     <label for="end_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">End Date</label>
-                    <input type="date" id="end_date" name="end_date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ request('end_date', now()->toDateString()) }}" max="{{ now()->toDateString() }}" onchange="validateDates()">
+                    <input type="datetime-local" id="end_date" name="end_date" class="mt-1 block w-full dark:bg-gray-900 dark:text-gray-300" value="{{ request('end_date', now()->format('Y-m-d\TH:i')) }}" max="{{ now()->format('Y-m-d\TH:i') }}" onchange="validateDates()">
                     <button type="button" onclick="adjustDate('end_date', -1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M-</button>
                     <button type="button" onclick="adjustDate('end_date', 1)" class="ml-2 px-2 py-1 bg-gray-500 text-white rounded">M+</button>
                 </div>
