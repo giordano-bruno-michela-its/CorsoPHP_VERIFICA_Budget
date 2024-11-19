@@ -9,6 +9,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-1/2 mx-auto">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="mb-4 text-red-600 font-bold">
+                        {{ __('Warning: Deleting this account will also delete all related transactions.') }}
+                    </div>
                     <form method="POST" action="{{ route('accounts.destroy', $account->id) }}">
                         @csrf
                         @method('DELETE')
