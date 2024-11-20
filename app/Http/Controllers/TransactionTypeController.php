@@ -60,6 +60,11 @@ class TransactionTypeController extends Controller
     public function edit(string $id)
     {
         $transactionType = TransactionType::where('user_id', Auth::id())->findOrFail($id);
+
+        if ($transactionType->user_id !== Auth::id()) {
+            return redirect()->route('dashboard')->with('error', '=== UNAUTHORIZED ===');
+        }
+
         return view('transaction-types.edit', compact('transactionType'));
     }
 
@@ -69,6 +74,11 @@ class TransactionTypeController extends Controller
     public function update(Request $request, string $id)
     {
         $transactionType = TransactionType::where('user_id', Auth::id())->findOrFail($id);
+
+        if ($transactionType->user_id !== Auth::id()) {
+            return redirect()->route('dashboard')->with('error', '=== UNAUTHORIZED ===');
+        }
+
         $transactionType->update($request->all());
 
         return redirect()->route('settings')->with('success', 'Transaction Type updated successfully.');
@@ -81,12 +91,21 @@ class TransactionTypeController extends Controller
     {
         $transactionType = TransactionType::where('user_id', Auth::id())->findOrFail($id);
 
+        if ($transactionType->user_id !== Auth::id()) {
+            return redirect()->route('dashboard')->with('error', '=== UNAUTHORIZED ===');
+        }
+
         return view('transaction-types.delete', compact('transactionType'));
     }
 
     public function destroy(string $id)
     {
         $transactionType = TransactionType::where('user_id', Auth::id())->findOrFail($id);
+
+        if ($transactionType->user_id !== Auth::id()) {
+            return redirect()->route('dashboard')->with('error', '=== UNAUTHORIZED ===');
+        }
+
         $transactionType->delete();
 
         return redirect()->route('settings')->with('success', 'Transaction type deleted successfully.');

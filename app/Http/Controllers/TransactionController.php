@@ -146,7 +146,7 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
 
         if ($transaction->user_id !== Auth::id()) {
-            return redirect()->route('dashboard')->withErrors(['error', '=== UNAUTHORIZED ===.']);
+            return redirect()->route('dashboard')->withErrors(['error', '=== UNAUTHORIZED ===']);
         }
 
         $userId = Auth::id();
@@ -170,6 +170,11 @@ class TransactionController extends Controller
         ]);
 
         $transaction = Transaction::findOrFail($id);
+
+        if ($transaction->user_id !== Auth::id()) {
+            return redirect()->route('dashboard')->withErrors(['error', '=== UNAUTHORIZED ===']);
+        }
+        
         $transaction->account_id = $request->account_id;
         $transaction->transaction_type_id = $request->transaction_type_id;
         $transaction->description = $request->description;
@@ -203,7 +208,7 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
 
         if ($transaction->user_id !== Auth::id()) {
-            return redirect()->route('dashboard')->with('error', 'You are not authorized to delete this transaction.');
+            return redirect()->route('dashboard')->with('error', '=== UNAUTHORIZED ===');
         }
 
         return view('transactions.delete', compact('transaction'));
@@ -217,7 +222,7 @@ class TransactionController extends Controller
             $transaction = Transaction::findOrFail($id);
 
             if ($transaction->user_id !== Auth::id()) {
-                return redirect()->route('dashboard')->with('error', 'You are not authorized to delete this transaction.');
+                return redirect()->route('dashboard')->with('error', '=== UNAUTHORIZED ===');
             }
 
             $transaction->delete();

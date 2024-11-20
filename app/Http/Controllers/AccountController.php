@@ -80,7 +80,7 @@ class AccountController extends Controller
         $account = Account::findOrFail($id);
 
         if ($account->user_id !== Auth::id()) {
-            return redirect()->route('settings')->with('error', 'You are not authorized to delete this account.');
+            return redirect()->route('settings')->with('error', '=== UNAUTHORIZED ===');
         }
 
         return view('accounts.delete', compact('account'));
@@ -91,7 +91,7 @@ class AccountController extends Controller
         $account = Account::findOrFail($id);
 
         if ($account->user_id !== Auth::id()) {
-            return redirect()->route('settings')->with('error', 'You are not authorized to delete this account.');
+            return redirect()->route('settings')->with('error', '=== UNAUTHORIZED ===');
         }
 
         $account->delete();
