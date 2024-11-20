@@ -144,6 +144,11 @@ class TransactionController extends Controller
     public function edit(string $id)
     {
         $transaction = Transaction::findOrFail($id);
+
+        if ($transaction->user_id !== Auth::id()) {
+            return redirect()->route('dashboard')->withErrors(['error', '=== UNAUTHORIZED ===.']);
+        }
+
         $userId = Auth::id();
         $accounts = Account::where('user_id', $userId)->get();
         $transactionTypes = TransactionType::where('user_id', $userId)->get();
