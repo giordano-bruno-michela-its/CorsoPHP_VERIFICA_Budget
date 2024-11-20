@@ -82,13 +82,4 @@
     </script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
 
-
-    <script>
-        function confirmDelete() {
-            if (confirm('Are you sure you want to delete this transaction?')) {
-                // Delete logic here
-            }
-        }
-    </script>
-
 </x-app-layout>
