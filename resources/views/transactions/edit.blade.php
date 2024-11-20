@@ -68,20 +68,20 @@
                     </form>
                 </div>
             </div>
+            @if($transaction->file_path)
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-1/2 mx-auto ml-4">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 leading-tight mb-4">{{ __('Uploaded File') }}</h3>
+                    @if(Str::endsWith($transaction->file_path, ['.jpg', '.jpeg', '.png', '.gif', '.svg']))
+                    <img src="{{ asset('storage/' . $transaction->file_path) }}" alt="Uploaded Image" class="w-full h-auto">
+                    @elseif(Str::endsWith($transaction->file_path, ['.pdf']))
+                    <a href="{{ asset('storage/' . $transaction->file_path) }}" target="_blank" class="text-blue-500 hover:underline mt-4 block">Download PDF</a>
+                    @endif
+                </div>
+            </div>
+            @endif
         </div>
 
-        @if($transaction->file_path)
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg w-1/2 mx-auto ml-4 mt-8">
-            <div class="p-6 text-gray-900 dark:text-gray-100">
-                <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 leading-tight mb-4">{{ __('Uploaded File') }}</h3>
-                @if(Str::endsWith($transaction->file_path, ['.jpg', '.jpeg', '.png', '.gif', '.svg']))
-                <img src="{{ asset('storage/' . $transaction->file_path) }}" alt="Uploaded Image" class="w-full h-auto">
-                @elseif(Str::endsWith($transaction->file_path, ['.pdf']))
-                <a href="{{ asset('storage/' . $transaction->file_path) }}" target="_blank" class="text-blue-500 hover:underline mt-4 block">Download PDF</a>
-                @endif
-            </div>
-        </div>
-        @endif
 
     </div>
 </x-app-layout>
