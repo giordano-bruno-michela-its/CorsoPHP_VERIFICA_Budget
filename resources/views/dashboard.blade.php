@@ -5,13 +5,13 @@
         </h2>
     </x-slot>
 
-    <div class="py-10">
+    <div class="py-6">
         {{--  --}}
     </div>
 
     <div class="w-full text-center">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="w-full flex align-items-stretch">
+            <div class="w-full flex justify-center">
                 <div class="w-1/3 mr-6 flex flex-col">
                     @include('partials.account-balances')
                 </div>
