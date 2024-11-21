@@ -42,11 +42,7 @@ class TransactionController extends Controller
 
         $transactions = $query->get();
 
-        $periodBalance = $transactions->sum(function ($transaction) {
-            return $transaction->transactionType->type === 'expense' ? -$transaction->amount : $transaction->amount;
-        });
-
-        return view('dashboard', compact('accounts', 'transactions', 'transactionTypes', 'totalBalance', 'periodBalance'));
+        return view('dashboard', compact('accounts', 'transactions', 'transactionTypes', 'totalBalance'));
     }
 
     /**
