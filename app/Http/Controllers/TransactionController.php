@@ -24,6 +24,8 @@ class TransactionController extends Controller
         $accounts = Account::where('user_id', $userId)->get();
         $transactionTypes = TransactionType::all();
         $totalBalance = $accounts->sum('balance');
+        $accountId = $request->query('account_id');
+        $transactions = Transaction::query();
 
         $query = Transaction::with(['account', 'transactionType'])
             ->where('user_id', $userId);
@@ -32,6 +34,10 @@ class TransactionController extends Controller
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');
             $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        if ($accountId) {
+            $query->where('account_id', $accountId);
         }
 
         $transactions = $query->get();
