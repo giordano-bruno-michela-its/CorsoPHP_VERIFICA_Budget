@@ -25,10 +25,11 @@ class TransactionController extends Controller
         $transactionTypes = TransactionType::all();
         $totalBalance = $accounts->sum('balance');
         $accountId = $request->query('account_id');
-        $transactions = Transaction::query();
+        $perPage = $request->query('per_page', 10);
 
         $query = Transaction::with(['account', 'transactionType'])
-            ->where('user_id', $userId);
+            ->where('user_id', $userId)
+            ->orderBy('created_at', 'desc');
 
         if ($request->has('start_date') && $request->has('end_date')) {
             $startDate = $request->input('start_date');
@@ -40,7 +41,7 @@ class TransactionController extends Controller
             $query->where('account_id', $accountId);
         }
 
-        $transactions = $query->get();
+        $transactions = $query->paginate($perPage);
 
         return view('dashboard', compact('accounts', 'transactions', 'transactionTypes', 'totalBalance'));
     }

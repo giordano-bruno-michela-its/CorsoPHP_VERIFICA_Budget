@@ -36,6 +36,19 @@
                             </svg>
                         </a>
                     </div>
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <label for="per_page" class="text-gray-700 dark:text-gray-300">Rows per page:</label>
+                            <select id="per_page" name="per_page" class="ml-2 dark:bg-gray-900 dark:text-gray-300" onchange="updatePerPage()">
+                                <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                            </select>
+                        </div>
+                        <div>
+                            {{ $transactions->links() }}
+                        </div>
+                    </div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 w-full" data-sort-dir="asc">
                             <thead>
@@ -84,5 +97,14 @@
         var transactionsSortUrl = "{{ route('transactions.sort') }}";
     </script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script>
+        function updatePerPage() {
+            const perPage = document.getElementById('per_page').value;
+            const url = new URL(window.location.href);
+            url.searchParams.set('per_page', perPage);
+            url.searchParams.set('page', 1); 
+            window.location.href = url.toString();
+        }
+    </script>
 
 </x-app-layout>
