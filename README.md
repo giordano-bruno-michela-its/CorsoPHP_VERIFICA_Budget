@@ -13,34 +13,34 @@ Tailwind CSS
 ### Installazione delle Dipendenze
 Assicurati di avere tutte le dipendenze necessarie installate. Esegui i seguenti comandi nel tuo terminale:
 
-composer install<br>
-npm install
+`composer install`<br>
+`npm install`
 
 ### Compilazione degli Asset
 Compila gli asset frontend:
 
-npm run build
+`npm run build`
 
 ### Configurazione dell'Ambiente
 Copia il file .env.example in .env e configura le variabili d'ambiente:
 
-cp .env.example .env
+`cp .env.example .env`
 
 ### Generazione della Chiave dell'Applicazione
 Genera la chiave dell'applicazione:
 
-php artisan key:generate
+`php artisan key:generate`
 
 ### Esecuzione delle Migrazioni
 Esegui le migrazioni del database e i seed delle tabelle di default:
 
-php artisan migrate<br>
-php artisan db:seed
+`php artisan migrate`<br>
+`php artisan db:seed`
 
 ### Avvio del Server di Sviluppo
 Avvia il server di sviluppo di Laravel:
 
-php artisan serve
+`php artisan serve`
 
 ## Istruzioni
 
@@ -49,11 +49,15 @@ php artisan serve
 - Dal pulsante in alto a destra con il proprio username si accede ad un menu per visualizzare il proprio profilo e le impostazioni.
 - Dalla schermata del profilo si può modificare l'username, cambiare password, e cancellare il profilo.
 
+---
+
 ### Impostazioni
 
 - Per accedere alle impostazioni cliccare sull'username (in alto a destra) e selezionare **Settings**
 Dalle impostazioni si possono aggiungere, rimuovere, e modificare i conti e i tipi di transazione. Ogni tipo di transazione personalizzato dev'essere classificato come entrata, addebito, o trasferimento.
   - La cancellazione di un account comporta la cancellazione di tutte le relative transazioni. È presente un'ulteriore richiesta di conferma prima della cancellazione di un account.
+
+---
 
 ### Dashboard
 
