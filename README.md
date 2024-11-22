@@ -81,7 +81,7 @@ Dalle impostazioni si possono aggiungere, rimuovere, e modificare i conti e i ti
 
 - La tabella transazioni visualizza di default tutte le transazioni ordinate per data, dalla più recente in giù.
   - È possibile selezionare un numero di righe tra 10, 25, e 50.
-In alto a destra è presente il pulsante **+** per aggiungere una transazione.
+- In alto a destra è presente il pulsante **+** per aggiungere una transazione.
 - Cliccando sugli header **Date** e **Amount** si possono ordinare i risultati rispettivamente per data e import ascendente/discendente.
 - Cliccando su una riga si accede alla schermata di modifica della transazione, nella quale si possono modificare tutti i relativi dettagli, e anche caricare un'immagine (per esempio di uno scontrino) o un file pdf.
 - L'immagine verrà visualizzata nel box a destra nei dettagli della transazione, mentre il file pdf sarà scaricabile tramite il pulsante **Download PDF**.
